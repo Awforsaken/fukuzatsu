@@ -44,7 +44,7 @@ $(document).ready(function() {
       var logEntry = $('<div class="log-entry"></div>');
 
       var logMessage;
-      if (type === 'multi-log') {
+      if (type === 'hand-log') {
           logMessage = `
               <span class="name-log">${name}:</span>
               <div class="values-container">
@@ -62,7 +62,16 @@ $(document).ready(function() {
                   <span class="chip-log">+${chip}</span>
                  </div>
                  <span class="undo">undo</span></div>`;
+      } else if (type === 'multi-log') {
+          logMessage = `
+              <span class="name-log">${name}:</span>
+              <div class="values-container">
+                <div class="values">
+                  <span class="multi-log">+${multi}</span>
+                </div>
+                <span class="undo">undo</span></div>`;
       }
+      
 
       logEntry.html(logMessage);
       logEntry.attr('data-type', type); // Add data-type attribute
@@ -78,35 +87,45 @@ $(document).ready(function() {
       log.push({ name, chip, multi, type });
   }
 
-  function undoLogEntry(entryText, entryType) {
-      console.log("Undoing log entry:", entryText, "Type:", entryType); // Debug log
+  function undoLogEntry(entryText, type) {
+    console.log("Undoing log entry:", entryText); // Debug log
 
-      // Regex to extract chip and multi values
-      var chipMatch = entryText.match(/(?:\+|-)?\d+/g);
-      var multiMatch = entryText.match(/x (\d+)/i);
+    // Regex to extract chip and multi values
+    var chipMatch = entryText.match(/(?:\+|-)?\d+/g);
+    var multiMatch = entryText.match(/x (\d+)/i);
 
-      if (entryType === 'multi-log') {
-          // Reset totals for hand entry
-          totalChip = 0;
-          totalMulti = 1;
-          
-          $('.hand').removeClass('selected'); // Remove .selected from all hands
-          $('.hand-options').removeClass('hide').addClass('show');
-          $('.card-options').removeClass('show').addClass('hide');
-          $('#log').empty(); // Clear the log
-          log = [];
-      } else if (entryType === 'chip-log') {
-          if (chipMatch) {
-              var chipValue = parseInt(chipMatch[0]);
-              totalChip -= chipValue;
-              console.log("Parsed chip value:", chipValue); // Debug log
-          }
-      }
+    if (type === 'hand-log') {
+        // Actions specific to hand-log undo
+        $('.hand').removeClass('selected'); // Remove .selected from all hands
+        $('.hand-options').removeClass('hide').addClass('show'); // Show hand options
+        $('.card-options').removeClass('show').addClass('hide'); // Hide card options
+        $('#log').empty(); // Clear the log
+        totalChip = 0; // Reset totalChip
+        totalMulti = 0; // Reset totalMulti
 
-      updateDisplay();
-  }
+        $('#extra-chip-value').val(''); // Assuming 'chip-input' is the ID of your chip input field
+        $('#extra-multi-value').val(''); // Assuming 'multi-input' is the ID of your multi input field
+   
 
-  
+        // Reset display values
+        updateDisplay();
+    } else if (type === 'chip-log') {
+        if (chipMatch) {
+            var chipValue = parseInt(chipMatch[0]);
+            totalChip -= chipValue;
+            console.log("Parsed chip value:", chipValue); // Debug log
+        }
+    } else if (type === 'multi-log') {
+        if (multiMatch) {
+            var multiValue = parseInt(multiMatch[1]);
+            totalMulti = Math.max(1, totalMulti - multiValue);
+            console.log("Parsed multi value:", multiValue); // Debug log
+        }
+    }
+
+    updateDisplay();
+}
+
 // Add chip value
 $('#add-chip-value').on('click', function() {
   var chipValue = parseInt($('#extra-chip-value').val());
@@ -157,7 +176,7 @@ $('#add-multi-value').on('click', function() {
           $('#log').empty();
           log = [];
 
-          updateLog(combination.name, combination.chip, combination.multi, 'multi-log');
+          updateLog(combination.name, combination.chip, combination.multi, 'hand-log');
 
           $('#hand-type').html(combination.name);
 
