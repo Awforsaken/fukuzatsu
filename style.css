@@ -205,11 +205,11 @@ button {
   font-size: 1.2rem;
 }
 .selection {
-  background-color: var(--green-3); 
+  background-color: var(--yellow-3); 
 }
 
 .selection:hover {
-  background-color: var(--green-2); 
+  background-color: var(--yellow-2); 
 }
 
 .selection.selected {
