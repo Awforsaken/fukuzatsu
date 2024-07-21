@@ -37,12 +37,11 @@ $(document).ready(function() {
   $('.hand').on('click', function() {
       var buttonId = $(this).attr('id');
       var combination = combinations[buttonId];
-      totalChip == 0;
-      totalMulti == 0;
+      
       if (combination) {
-          // Update totals
-          totalChip += combination.chip;
-          totalMulti += combination.multi;
+          // Reset totals
+          totalChip = combination.chip;
+          totalMulti = combination.multi;
 
           // Update the hand type display
           $('#hand-type').html(combination.name);
