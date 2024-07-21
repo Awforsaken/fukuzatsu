@@ -60,7 +60,7 @@
 
   font-family: 'm6x11plus';
   text-shadow: #000 2px 2px 2px;
-  transition: transform 2s;
+  transition: all 0.2s;
 }
 
 
@@ -205,8 +205,13 @@ button {
   font-size: 1.2rem;
 }
 .selection {
-  background-color: var(--table-background); 
+  background-color: var(--green-3); 
 }
+
+.selection:hover {
+  background-color: var(--green-2); 
+}
+
 .selection.selected {
 background-color: var(--symbol-highlight);
 }
@@ -221,8 +226,10 @@ background-color: var(--symbol-highlight);
   position: relative;
   outline: 2px solid var(--card-border);
   outline-offset: -5px; /* Inset effect */
-
   font-size: 2rem;
+}
+.card-chip:hover {
+  background-color: var(--yellow-1);
 }
 
 
@@ -295,6 +302,10 @@ color: var(--text-l);
 .option-chip {
   background-color: var(--blue-2);
 }
+.option-chip:hover {
+  background-color: var(--blue-1);
+}
+
 .extra-chip-container.card {
   background-color: var(--blue-3);
   border: 2px solid var(--blue-1);
@@ -305,6 +316,9 @@ color: var(--text-l);
 
 .option-multi {
   background-color: var(--red-2);
+}
+.option-multi:hover {
+  background-color: var(--red-1);
 }
 
 .extra-multi-container {
