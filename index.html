@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fukuzatsu points counter</title>
-
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="grid.css">
   <script src="jquery-3.6.1.min.js"></script>
@@ -24,7 +23,7 @@
             <div class="points-card total">0</div>
           </div>
 
-          <div class=" card">
+          <div class="card column">
             <div>Breakdown</div>
             <div class="log-container" id="log"></div>
           </div>
@@ -33,8 +32,15 @@
 
   
         <div class="col-span-8 ">
+          <div class="card">
+            <button class="step selection">
+              1. Hand
+            </button>
+            <button class="step selection" disabled>
+              2. Card chips + modifiers
+            </button>
+          </div>
           <div class="card column">
-          
             <div class="hand-options">
               <h1>Hand type</h1>
               <h4 class="subtitle">Default hands</h4>
@@ -104,76 +110,18 @@
       </div>
       
     </div>
-<div style="display:none;">
-    <h1>mod name</h1>
-    <p>
-      this is a mod that adds x, y, and z. <br>
-      it also adds foo and bar.
-    </p>
-    <br>
-    <h2>download link</h2>
-    <br>
-    <a href="https://example.com" id="download">download</a>
-    <br>
-    <br>
-    <div class="jokersfull">
-      <h2>jokers</h2>
-      <br>
-      <div class="jokers cards">
-        
-      </div>
-      <br>
-    </div>
-    <div class="consumablesfull">
-      <h2>consumables</h2>
-      <br>
-      <div class="consumables cards">
-        
-      </div>
-      <br>
-    </div>
-    <div class="cardmodsfull">
-      <h2>card modifications</h2>
-      <br>
-      <div class="cardmods cards">
-        
-      </div>
-      <br>
-    </div>
-    <div class="decksfull">
-      <h2>decks</h2>
-      <br>
-      <div class="decks cards">
-        
-      </div>
-      <br>
-    </div>
-    <div class="stickersfull">
-      <h2>stickers</h2>
-      <br>
-      <div class="stickers cards">
-        
-      </div>
-      <br>
-    </div>
-    <div class="blindsfull">
-      <h2>blinds</h2>
-      <br>
-      <div class="blinds cards">
-        
-      </div>
-      <br>
-    </div>
-    <div class="shopitemsfull">
-      <h2>shop items</h2>
-      <br>
-      <div class="shopitems cards">
-        
-      </div>
-      <br>
-    </div>
-  </div>
+
   </main>
+  <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+  <script>
+    kofiWidgetOverlay.draw('awfor', {
+      'type': 'floating-chat',
+      'floating-chat.donateButton.text': 'Donate',
+      'floating-chat.donateButton.background-color': '#ff5f5f',
+      'floating-chat.donateButton.text-color': '#fff'
+    });
+  </script>
+  
   <script src="addjokers.js" defer></script>
   <script src="js.js"></script>
 </body>

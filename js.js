@@ -40,9 +40,57 @@ $(document).ready(function() {
       $('.points-card.total').text(totalChip * totalMulti);
   }
 
-  function updateLog(message) {
-      log.push(message);
-      $('#log').html(log.join('<br>'));
+  function updateLog(name, chip, multi, type) {
+      var logEntry = $('<div class="log-entry"></div>');
+
+      var logMessage;
+      if (type === 'multi-log') {
+          logMessage = `
+              <span class="name-log">${name}:</span>
+              <div class="values-container"> 
+                <div class="values">
+                <span class="chip-log">${chip}</span> 
+                <span> X </span> 
+                <span class="multi-log">${multi}</span>
+                </div>
+                 undo</div>`;
+      } else if (type === 'chip-log') {
+          logMessage = `
+              <span class="name-log">${name}:</span> 
+              <div class="values-container"> 
+                <div class="values">
+                  <span class="chip-log">+${chip}</span>
+                 </div>
+               undo</div>`;
+      }
+
+      logEntry.html(logMessage);
+
+      logEntry.on('click', function() {
+          var entryText = $(this).text();
+          undoLogEntry(entryText);
+          $(this).remove();
+      });
+
+      $('#log').append(logEntry);
+      log.push({ name, chip, multi, type });
+  }
+
+  function undoLogEntry(entryText) {
+      var parts = entryText.split(' ');
+
+      if (parts[0] === 'High' || parts[0] === 'Pair' || parts[0] === 'Two' || parts[0] === 'Three' || parts[0] === 'Straight' || parts[0] === 'Flush' || parts[0] === 'Full' || parts[0] === 'Four' || parts[0] === 'Royal' || parts[0] === 'Five') {
+          totalChip = 0;
+          totalMulti = 1;
+
+          $('#log').empty();
+          log = [];
+      } else {
+          var chipValue = parseInt(parts[2]);
+          totalChip -= chipValue;
+      }
+
+      updateDisplay();
   }
 
   // Hand value click handler
@@ -51,18 +99,22 @@ $(document).ready(function() {
       var combination = combinations[buttonId];
 
       if (combination) {
-          // Reset totals
+          // Remove .selected from all .hand elements
+          $('.hand').removeClass('selected');
+
+          // Add .selected to the clicked .hand element
+          $(this).addClass('selected');
+
           totalChip = combination.chip;
           totalMulti = combination.multi;
 
-          // Update log
-          log = []; // Clear previous log entries when a new hand is selected
-          updateLog(combination.name + ' ' + combination.chip + ' x ' + combination.multi);
+          $('#log').empty();
+          log = [];
 
-          // Update the hand type display
+          updateLog(combination.name, combination.chip, combination.multi, 'multi-log');
+
           $('#hand-type').html(combination.name);
 
-          // Update the display of chip, multi, and total
           updateDisplay();
       } else {
           $('#hand-type').html('No combination found for this button.');
@@ -77,16 +129,13 @@ $(document).ready(function() {
       if (cardchip) {
           totalChip += cardchip.chip;
 
-          // Update log
-          updateLog(cardchip.name + ': +' + cardchip.chip + ' chip');
+          updateLog(cardchip.name, cardchip.chip, '', 'chip-log');
 
-          // Update the display of chip, multi, and total
           updateDisplay();
       } else {
           console.log('Card chip not found:', buttonId);
       }
   });
 
-  // Initial display update
   updateDisplay();
 });
