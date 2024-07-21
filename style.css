@@ -28,7 +28,31 @@
   --yellow-3: #B47621;
   --purple:#9f608b;
   --black:#111111;
+    /* Card Backgrounds */
+    --card-background: #D0A472; /* Main background color of the cards */
+    --card-border: #8B5A2B; /* Darker border color for the cards */
+  
+    /* Primary Text Colors */
+    --text-primary: #000000; /* Black text for main details */
+    --text-highlight: #FFEC85; /* Light yellow for highlights */
+    --text-secondary: #563912; /* Darker brown for secondary details */
+  
+    /* Symbol and Detail Colors */
+    --symbol-color: #0CDEAD; /* Cyan for symbols and special details */
+    --symbol-highlight: #FF6B6B; /* Red for attention-grabbing symbols */
+  
+    /* Accent Colors */
+    --accent-orange: #D97A2B; /* Bright orange for important elements */
+    --accent-red: #B73E3E; /* Red for important or warning details */
+  
+    /* Background and Table Colors */
+    --table-background: #4C2F24; /* Dark brown background for the table */
+  
+    /* Miscellaneous */
+    --glow-effect: #E4D6A7; /* Light yellow glow effect */
+    --card-shadow: #3B1E14; /* Dark shadow color for depth */
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -43,7 +67,7 @@ main {
   text-align: center;
   color: white;
   padding: 1rem;
-  width: min(60rem, 100%);
+  width: min(65rem, 100%);
   margin: 1rem auto;
   font-size: 1.5rem;
 }
@@ -148,6 +172,7 @@ img.hasback {
   border: 2px solid white;
   border-radius: 1rem;
   background-color: #374244;
+  margin-bottom: 1rem;
 }
 
 .column {
@@ -209,9 +234,26 @@ img.hasback {
   margin:0.3rem;
   border-radius: 8px;
   color: var(--text-h);
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
+.card-chip {
+  height:6rem;
+  width:4rem;
+  background-color: var(--card-background);
+  position: relative;
+
+  outline: 2px solid var(--card-border);
+  outline-offset: -5px; /* Inset effect */
+
+  font-size: 2rem;
+}
+
+.log-container {
+  text-align:left;
+  font-size: 1rem;
+  color: var(--symbol-color);
+}
 
 body {
   background-color: rgba(74, 10, 75, 1);

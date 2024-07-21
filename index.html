@@ -13,15 +13,24 @@
   <main>
     <div class="container">
       <div class="grid">
-        <div class="col-span-4 card column">
-          <div id="hand-type">Select hand</div>
-          <div class="points">
-            <div class="points-card chip">0</div>
-            <div class="points-card">X</div>
-            <div class="points-card multi">0</div> 
+        <div class="col-span-4">
+          <div class=" card column">
+            <div id="hand-type">Select hand</div>
+            <div class="points">
+              <div class="points-card chip">0</div>
+              <div class="points-card">X</div>
+              <div class="points-card multi">0</div> 
+            </div>
+            <div class="points-card total">0</div>
           </div>
-          <div class="points-card total">0</div>
+
+          <div class=" card">
+            <div>Breakdown</div>
+            <div class="log-container" id="log"></div>
+          </div>
+
         </div>
+
   
         <div class="col-span-8 ">
           <div class="card column">
@@ -48,12 +57,30 @@
 
             <div class="card-options">
               <h1>Card chips</h1>
-              <h4 class="subtitle">Default hands</h4>
               <div class="">
-                <button id="cardchip1" class="selection card-chip">Ace</button>
-                <button id="cardchip2" class="selection card-chip">King</button>
-                <button id="cardchip3" class="selection card-chip">Queen</button>
-                <button id="cardchip4" class="selection card-chip">Jack</button>
+                <button id="cardchip1" class="selection card-chip">A</button>
+                <button id="cardchip2" class="selection card-chip">K</button>
+                <button id="cardchip3" class="selection card-chip">Q</button>
+                <button id="cardchip4" class="selection card-chip">J</button>
+                <button id="cardchip5" class="selection card-chip">10</button>
+                <button id="cardchip6" class="selection card-chip">9</button>
+                <button id="cardchip7" class="selection card-chip">8</button>
+                <button id="cardchip8" class="selection card-chip">7</button>
+                <button id="cardchip9" class="selection card-chip">6</button>
+                <button id="cardchip10" class="selection card-chip">5</button>
+                <button id="cardchip11" class="selection card-chip">4</button>
+                <button id="cardchip12" class="selection card-chip">3</button>
+                <button id="cardchip13" class="selection card-chip">2</button>
+              </div>
+            </div>
+
+            <div class="extra-mods">
+              <h1>Extra Buffs and Multipliers</h1>
+              <div class="">
+                <button id="cardchip1" class="selection card-chip">x11</button>
+                <button id="cardchip2" class="selection card-chip">K</button>
+                <button id="cardchip3" class="selection card-chip">Q</button>
+                <button id="cardchip4" class="selection card-chip">J</button>
                 <button id="cardchip5" class="selection card-chip">10</button>
                 <button id="cardchip6" class="selection card-chip">9</button>
                 <button id="cardchip7" class="selection card-chip">8</button>
