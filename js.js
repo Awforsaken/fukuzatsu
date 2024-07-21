@@ -138,6 +138,8 @@ $('#add-chip-value').on('click', function() {
   totalChip += chipValue;
   updateLog('Extra Chips', chipValue, '', 'chip-log');
   updateDisplay();
+  $('#extra-chip-value').val(''); // Assuming 'chip-input' is the ID of your chip input field
+
 });
 
 // Add multi value
@@ -152,6 +154,7 @@ $('#add-multi-value').on('click', function() {
   totalMulti += multiValue;
   updateLog('Extra Multi', '', multiValue, 'multi-log');
   updateDisplay();
+  $('#extra-multi-value').val(''); // Assuming 'multi-input' is the ID of your multi input field
 });
 
 
