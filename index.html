@@ -32,16 +32,16 @@
 
   
         <div class="col-span-8 ">
-          <div class="card">
-            <button class="step selection">
+          <div class="card" style="display:none;">
+            <button id="hand-option-step" class="step">
               1. Hand
             </button>
-            <button class="step selection" disabled>
+            <button id="card-options-step" class="step" disabled>
               2. Card chips + modifiers
             </button>
           </div>
           <div class="card column">
-            <div class="hand-options">
+            <div class="hand-options show">
               <h1>Hand type</h1>
               <h4 class="subtitle">Default hands</h4>
               <div class="">
@@ -61,7 +61,7 @@
               </div>
             </div>
 
-            <div class="card-options">
+            <div class="card-options hide">
               <h1>Card chips</h1>
               <div class="">
                 <button id="cardchip1" class="selection card-chip">A</button>
@@ -78,30 +78,33 @@
                 <button id="cardchip12" class="selection card-chip">3</button>
                 <button id="cardchip13" class="selection card-chip">2</button>
               </div>
+              <h1>Extra Buffs and Multipliers</h1>
+              <div class="grid">
+
+                <div class="col-span-6 extra-chip-container card">
+                  <input type="number" id="extra-chip-value" placeholder="Enter chip value" />
+                  <button id="add-chip-value" class="option-chip">Add Chip Value</button>
+                </div>
+              
+                <!-- Input for multi values -->
+                <div class="col-span-6 extra-multi-container card">
+                  <input type="number" id="extra-multi-value" placeholder="Enter multi value" />
+                  <button id="add-multi-value"  class="option-multi">Add Multi Value</button>
+                </div>
+              </div>
+            </div>
             </div>
 
             <div class="extra-mods">
-              <h1>Extra Buffs and Multipliers</h1>
-              <div class="">
-                <button id="cardchip1" class="selection card-chip">x11</button>
-                <button id="cardchip2" class="selection card-chip">K</button>
-                <button id="cardchip3" class="selection card-chip">Q</button>
-                <button id="cardchip4" class="selection card-chip">J</button>
-                <button id="cardchip5" class="selection card-chip">10</button>
-                <button id="cardchip6" class="selection card-chip">9</button>
-                <button id="cardchip7" class="selection card-chip">8</button>
-                <button id="cardchip8" class="selection card-chip">7</button>
-                <button id="cardchip9" class="selection card-chip">6</button>
-                <button id="cardchip10" class="selection card-chip">5</button>
-                <button id="cardchip11" class="selection card-chip">4</button>
-                <button id="cardchip12" class="selection card-chip">3</button>
-                <button id="cardchip13" class="selection card-chip">2</button>
-              </div>
-            </div>
+              
           </div>
           
           <div class="card column">
-           
+           left to do:
+          <br>
+          add extra multi and chip modifiers
+          <br>
+          fix bug where multi acts same as hand in the log when removing
            
           </div>
 

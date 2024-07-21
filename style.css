@@ -101,6 +101,24 @@ img.hasback {
 }
 
 /* my css */
+.hand-options, .card-options {
+  transition: transform 0.5s, opacity 0.5s;
+  transform: scaleY(1);
+}
+
+.hide {
+  transform: scaleY(0);
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.show {
+  transform: scaleY(1);
+  opacity: 1;
+  height: auto;
+}
+
 .subtitle {
   margin-top:1rem;
   margin-bottom:0.5rem;
@@ -264,7 +282,7 @@ color: var(--text-l);
 
 }
 .log-entry:hover {
-  background-color: var(--accent-red);
+  background-color: var(--green-2);
   position: relative;
   color:var(--text-h);
   
@@ -274,8 +292,40 @@ color: var(--text-l);
   align-items: flex-start;
 }
 
+.option-chip {
+  background-color: var(--blue-2);
+}
+.extra-chip-container.card {
+  background-color: var(--blue-3);
+  border: 2px solid var(--blue-1);
+  padding: 0.2rem;
+}
+
+.option-multi {
+  background-color: var(--red-2);
+}
+
+.extra-multi-container {
+  background-color: var(--red-3);
+  border: 2px solid var(--red-1);
+  padding: 0.2rem;
+}
 
 
+input[type="number"] {
+  width:100%;
+  padding: 1.2rem 1rem ;
+  margin: 1rem 0 1rem 1rem ;
+  border: 2px solid var(--white-3);
+  background-color: var(--container-background);
+  border-radius: 4px;
+  color:var(--text-h);
+  box-sizing: border-box;
+  font-size: 1.2rem;
+}
+input[type="number"]::placeholder {
+  color:var(--glow-effect)
+}
 
 body {
   background-color: rgba(74, 10, 75, 1);

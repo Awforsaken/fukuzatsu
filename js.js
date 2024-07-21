@@ -47,28 +47,30 @@ $(document).ready(function() {
       if (type === 'multi-log') {
           logMessage = `
               <span class="name-log">${name}:</span>
-              <div class="values-container"> 
+              <div class="values-container">
                 <div class="values">
-                <span class="chip-log">${chip}</span> 
-                <span> X </span> 
+                <span class="chip-log">${chip}</span>
+                <span> X </span>
                 <span class="multi-log">${multi}</span>
                 </div>
-                 undo</div>`;
+                 <span class="undo">undo</span></div>`;
       } else if (type === 'chip-log') {
           logMessage = `
-              <span class="name-log">${name}:</span> 
-              <div class="values-container"> 
+              <span class="name-log">${name}:</span>
+              <div class="values-container">
                 <div class="values">
                   <span class="chip-log">+${chip}</span>
                  </div>
-               undo</div>`;
+                 <span class="undo">undo</span></div>`;
       }
 
       logEntry.html(logMessage);
+      logEntry.attr('data-type', type); // Add data-type attribute
 
       logEntry.on('click', function() {
           var entryText = $(this).text();
-          undoLogEntry(entryText);
+          var entryType = $(this).data('type'); // Get the entry type
+          undoLogEntry(entryText, entryType);
           $(this).remove();
       });
 
@@ -76,27 +78,71 @@ $(document).ready(function() {
       log.push({ name, chip, multi, type });
   }
 
-  function undoLogEntry(entryText) {
-      var parts = entryText.split(' ');
+  function undoLogEntry(entryText, entryType) {
+      console.log("Undoing log entry:", entryText, "Type:", entryType); // Debug log
 
-      if (parts[0] === 'High' || parts[0] === 'Pair' || parts[0] === 'Two' || parts[0] === 'Three' || parts[0] === 'Straight' || parts[0] === 'Flush' || parts[0] === 'Full' || parts[0] === 'Four' || parts[0] === 'Royal' || parts[0] === 'Five') {
+      // Regex to extract chip and multi values
+      var chipMatch = entryText.match(/(?:\+|-)?\d+/g);
+      var multiMatch = entryText.match(/x (\d+)/i);
+
+      if (entryType === 'multi-log') {
+          // Reset totals for hand entry
           totalChip = 0;
           totalMulti = 1;
-
-          $('#log').empty();
+          
+          $('.hand').removeClass('selected'); // Remove .selected from all hands
+          $('.hand-options').removeClass('hide').addClass('show');
+          $('.card-options').removeClass('show').addClass('hide');
+          $('#log').empty(); // Clear the log
           log = [];
-      } else {
-          var chipValue = parseInt(parts[2]);
-          totalChip -= chipValue;
+      } else if (entryType === 'chip-log') {
+          if (chipMatch) {
+              var chipValue = parseInt(chipMatch[0]);
+              totalChip -= chipValue;
+              console.log("Parsed chip value:", chipValue); // Debug log
+          }
       }
 
       updateDisplay();
   }
 
+  
+// Add chip value
+$('#add-chip-value').on('click', function() {
+  var chipValue = parseInt($('#extra-chip-value').val());
+
+  if (isNaN(chipValue) || chipValue <= 0) {
+    alert('Please enter a valid chip value.');
+    return;
+  }
+
+  totalChip += chipValue;
+  updateLog('Extra Chips', chipValue, '', 'chip-log');
+  updateDisplay();
+});
+
+// Add multi value
+$('#add-multi-value').on('click', function() {
+  var multiValue = parseInt($('#extra-multi-value').val());
+
+  if (isNaN(multiValue) || multiValue <= 0) {
+    alert('Please enter a valid multi value.');
+    return;
+  }
+
+  totalMulti += multiValue;
+  updateLog('Extra Multi', '', multiValue, 'multi-log');
+  updateDisplay();
+});
+
+
   // Hand value click handler
   $('.hand').on('click', function() {
       var buttonId = $(this).attr('id');
       var combination = combinations[buttonId];
+      $('.hand-options').removeClass('show').addClass('hide');
+      $('.card-options').removeClass('hide').addClass('show');
+      $('#card-options-step').prop('disabled', false);
 
       if (combination) {
           // Remove .selected from all .hand elements
