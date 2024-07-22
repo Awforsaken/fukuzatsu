@@ -299,8 +299,9 @@ color: var(--text-l);
   align-items: flex-start;
 }
 
-.option-chip {
+.extra-chip-container .option-chip {
   background-color: var(--blue-2);
+  padding:1.2rem 0.5rem;
 }
 .option-chip:hover {
   background-color: var(--blue-1);
@@ -314,8 +315,9 @@ color: var(--text-l);
   border-radius: 0.5rem;
 }
 
-.option-multi {
+.extra-multi-container .option-multi {
   background-color: var(--red-2);
+  padding:1.2rem 0.5rem;
 }
 .option-multi:hover {
   background-color: var(--red-1);
