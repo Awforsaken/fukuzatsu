@@ -111,6 +111,7 @@ img.hasback {
   opacity: 0;
   height: 0;
   overflow: hidden;
+  margin-bottom: 0;
 }
 
 .show {
@@ -309,7 +310,7 @@ color: var(--text-l);
 
 .extra-chip-container.card {
   background-color: var(--blue-3);
-  border: 2px solid var(--blue-1);
+  border: 2px solid var(--blue-2);
   padding: 0.2rem;
   margin-bottom: 0;
   border-radius: 0.5rem;
@@ -325,7 +326,7 @@ color: var(--text-l);
 
 .extra-multi-container {
   background-color: var(--red-3);
-  border: 2px solid var(--red-1);
+  border: 2px solid var(--red-2);
   padding: 0.2rem;
   margin-bottom: 0;
   border-radius: 0.5rem;

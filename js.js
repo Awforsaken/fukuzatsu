@@ -92,7 +92,7 @@ $(document).ready(function() {
 
     // Regex to extract chip and multi values
     var chipMatch = entryText.match(/(?:\+|-)?\d+/g);
-    var multiMatch = entryText.match(/x (\d+)/i);
+    var multiMatch = entryText.match(/X (\d+)/i); // Updated regex to match 'X 1', 'X 2', etc.
 
     if (type === 'hand-log') {
         // Actions specific to hand-log undo
@@ -105,7 +105,6 @@ $(document).ready(function() {
 
         $('#extra-chip-value').val(''); // Assuming 'chip-input' is the ID of your chip input field
         $('#extra-multi-value').val(''); // Assuming 'multi-input' is the ID of your multi input field
-   
 
         // Reset display values
         updateDisplay();
@@ -117,14 +116,15 @@ $(document).ready(function() {
         }
     } else if (type === 'multi-log') {
         if (multiMatch) {
-            var multiValue = parseInt(multiMatch[1]);
-            totalMulti = Math.max(1, totalMulti - multiValue);
+            var multiValue = parseInt(multiMatch[1]); // Changed from multiMatch[0] to multiMatch[1]
+            totalMulti -= multiValue;
             console.log("Parsed multi value:", multiValue); // Debug log
         }
     }
 
     updateDisplay();
 }
+
 
 // Add chip value
 $('#add-chip-value').on('click', function() {
