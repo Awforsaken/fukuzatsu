@@ -41,122 +41,124 @@ $(document).ready(function() {
   }
 
   function updateLog(name, chip, multi, type) {
-      var logEntry = $('<div class="log-entry"></div>');
-
-      var logMessage;
-      if (type === 'hand-log') {
-          logMessage = `
-              <span class="name-log">${name}:</span>
-              <div class="values-container">
-                <div class="values">
-                <span class="chip-log">${chip}</span>
-                <span> X </span>
-                <span class="multi-log">${multi}</span>
-                </div>
-                 <span class="undo">undo</span></div>`;
-      } else if (type === 'chip-log') {
-          logMessage = `
-              <span class="name-log">${name}:</span>
-              <div class="values-container">
-                <div class="values">
-                  <span class="chip-log">+${chip}</span>
-                 </div>
-                 <span class="undo">undo</span></div>`;
-      } else if (type === 'multi-log') {
-          logMessage = `
-              <span class="name-log">${name}:</span>
-              <div class="values-container">
-                <div class="values">
-                  <span class="multi-log">+${multi}</span>
-                </div>
-                <span class="undo">undo</span></div>`;
-      }
-      
-
-      logEntry.html(logMessage);
-      logEntry.attr('data-type', type); // Add data-type attribute
-
-      logEntry.on('click', function() {
-          var entryText = $(this).text();
-          var entryType = $(this).data('type'); // Get the entry type
-          undoLogEntry(entryText, entryType);
-          $(this).remove();
-      });
-
-      $('#log').append(logEntry);
-      log.push({ name, chip, multi, type });
-  }
-
-  function undoLogEntry(entryText, type) {
-    console.log("Undoing log entry:", entryText); // Debug log
-
-    // Regex to extract chip and multi values
-    var chipMatch = entryText.match(/(?:\+|-)?\d+/g);
-    var multiMatch = entryText.match(/X (\d+)/i); // Updated regex to match 'X 1', 'X 2', etc.
+    var logEntry = $('<div class="log-entry"></div>');
+    var logMessage;
 
     if (type === 'hand-log') {
-        // Actions specific to hand-log undo
-        $('.hand').removeClass('selected'); // Remove .selected from all hands
-        $('.hand-options').removeClass('hide').addClass('show'); // Show hand options
-        $('.card-options').removeClass('show').addClass('hide'); // Hide card options
-        $('#log').empty(); // Clear the log
-        totalChip = 0; // Reset totalChip
-        totalMulti = 0; // Reset totalMulti
-
-        $('#extra-chip-value').val(''); // Assuming 'chip-input' is the ID of your chip input field
-        $('#extra-multi-value').val(''); // Assuming 'multi-input' is the ID of your multi input field
-
-        // Reset display values
-        updateDisplay();
+        logMessage = `
+            <span class="name-log">${name}:</span>
+            <div class="values-container">
+              <div class="values">
+              <span class="chip-log">${chip}</span>
+              <span> X </span>
+              <span class="multi-log">${multi}</span>
+              </div>
+               <span class="undo">undo</span></div>`;
     } else if (type === 'chip-log') {
-        if (chipMatch) {
-            var chipValue = parseInt(chipMatch[0]);
-            totalChip -= chipValue;
-            console.log("Parsed chip value:", chipValue); // Debug log
-        }
+        logMessage = `
+            <span class="name-log">${name}:</span>
+            <div class="values-container">
+              <div class="values">
+                <span class="chip-log">+${chip}</span>
+               </div>
+               <span class="undo">undo</span></div>`;
     } else if (type === 'multi-log') {
-        if (multiMatch) {
-            var multiValue = parseInt(multiMatch[1]); // Changed from multiMatch[0] to multiMatch[1]
-            totalMulti -= multiValue;
-            console.log("Parsed multi value:", multiValue); // Debug log
-        }
+        logMessage = `
+            <span class="name-log">${name}:</span>
+            <div class="values-container">
+              <div class="values">
+                <span class="multi-log">+${multi}</span>
+              </div>
+              <span class="undo">undo</span></div>`;
     }
 
-    updateDisplay();
+    logEntry.html(logMessage);
+    logEntry.attr('data-type', type); // Add data-type attribute
+
+    logEntry.on('click', function() {
+        var entryText = $(this).text();
+        var entryType = $(this).data('type'); // Get the entry type
+        console.log("Log entry clicked:", entryText); // Debug log
+        undoLogEntry(entryText, entryType);
+        $(this).remove();
+    });
+
+    $('#log').append(logEntry);
+    log.push({ name, chip, multi, type });
 }
 
 
-// Add chip value
-$('#add-chip-value').on('click', function() {
-  var chipValue = parseInt($('#extra-chip-value').val());
+function undoLogEntry(entryText, type) {
+  console.log("Undoing log entry:", entryText); // Debug log
 
-  if (isNaN(chipValue) || chipValue <= 0) {
-    alert('Please enter a valid chip value.');
-    return;
+  // Extracting chip value and multi value from the log entry text
+  var chipMatch = entryText.match(/\+?\d+/g); // Match any positive or negative integer
+  var multiMatch = entryText.match(/(?:\+)?(\d+)/i); // Match '+<number>'
+
+  console.log("chipMatch:", chipMatch);
+  console.log("multiMatch:", multiMatch);
+
+  if (type === 'hand-log') {
+      // Actions specific to hand-log undo
+      $('.hand').removeClass('selected'); // Remove .selected from all hands
+      $('.hand-options').removeClass('hide').addClass('show'); // Show hand options
+      $('.card-options').removeClass('show').addClass('hide'); // Hide card options
+      $('#log').empty(); // Clear the log
+      totalChip = 0; // Reset totalChip
+      totalMulti = 0; // Reset totalMulti
+
+      $('#extra-chip-value').val(''); // Clear chip input field
+      $('#extra-multi-value').val(''); // Clear multi input field
+
+      // Reset display values
+      updateDisplay();
+  } else if (type === 'chip-log') {
+      if (chipMatch) {
+          var chipValue = parseInt(chipMatch[0]);
+          totalChip -= chipValue;
+          console.log("Parsed chip value:", chipValue); // Debug log
+      }
+  } else if (type === 'multi-log') {
+      if (multiMatch) {
+          var multiValue = parseInt(multiMatch[1]);
+          totalMulti -= multiValue;
+          console.log("Parsed multi value:", multiValue); // Debug log
+      }
   }
 
-  totalChip += chipValue;
-  updateLog('Extra Chips', chipValue, '', 'chip-log');
   updateDisplay();
-  $('#extra-chip-value').val(''); // Assuming 'chip-input' is the ID of your chip input field
+}
 
-});
 
-// Add multi value
-$('#add-multi-value').on('click', function() {
-  var multiValue = parseInt($('#extra-multi-value').val());
+  // Add chip value
+  $('#add-chip-value').on('click', function() {
+      var chipValue = parseInt($('#extra-chip-value').val());
 
-  if (isNaN(multiValue) || multiValue <= 0) {
-    alert('Please enter a valid multi value.');
-    return;
-  }
+      if (isNaN(chipValue) || chipValue <= 0) {
+          alert('Please enter a valid chip value.');
+          return;
+      }
 
-  totalMulti += multiValue;
-  updateLog('Extra Multi', '', multiValue, 'multi-log');
-  updateDisplay();
-  $('#extra-multi-value').val(''); // Assuming 'multi-input' is the ID of your multi input field
-});
+      totalChip += chipValue;
+      updateLog('Extra Chips', chipValue, '', 'chip-log');
+      updateDisplay();
+      $('#extra-chip-value').val(''); // Assuming 'chip-input' is the ID of your chip input field
+  });
 
+  // Add multi value
+  $('#add-multi-value').on('click', function() {
+      var multiValue = parseInt($('#extra-multi-value').val());
+
+      if (isNaN(multiValue) || multiValue <= 0) {
+          alert('Please enter a valid multi value.');
+          return;
+      }
+
+      totalMulti += multiValue;
+      updateLog('Extra Multi', '', multiValue, 'multi-log');
+      updateDisplay();
+      $('#extra-multi-value').val(''); // Assuming 'multi-input' is the ID of your multi input field
+  });
 
   // Hand value click handler
   $('.hand').on('click', function() {
