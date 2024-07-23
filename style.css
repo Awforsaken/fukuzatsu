@@ -102,9 +102,23 @@ h1 {
 }
 
 #reset-hand {
-  background-color: var(--symbol-highlight);
+  background-color: var(--table-background);
+  color:var(--glow-effect);
 }
 
+#reset-hand:hover {
+ /* animation: flashingColors 2s infinite;
+ */ 
+  background-color:var(--text-secondary);
+  color:var(--text-h);
+}
+
+@keyframes flashingColors {
+  0% { background-color: var(--symbol-highlight); }
+
+  50% { background-color: var(--symbol-color); }
+  100% { background-color: var(--symbol-highlight); }
+}
 /* my css */
 .hand-options, .card-options {
   transition: transform 0.5s, opacity 0.5s;
