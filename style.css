@@ -101,6 +101,10 @@ h1 {
   to {object-position: -2720px 0px}
 }
 
+#reset-hand {
+  background-color: var(--symbol-highlight);
+}
+
 /* my css */
 .hand-options, .card-options {
   transition: transform 0.5s, opacity 0.5s;
@@ -206,6 +210,7 @@ button {
   border-radius: 8px;
   color: var(--text-h);
   font-size: 1.2rem;
+  cursor: pointer; 
 }
 .selection {
   background-color: var(--yellow-3); 
@@ -316,6 +321,7 @@ color: var(--text-l);
   padding: 0.2rem;
   margin-bottom: 0;
   border-radius: 0.5rem;
+  padding-right: 1rem;
 }
 
 .extra-multi-container .option-multi {
@@ -332,6 +338,7 @@ color: var(--text-l);
   padding: 0.2rem;
   margin-bottom: 0;
   border-radius: 0.5rem;
+  padding-right: 1rem;
 }
 
 
