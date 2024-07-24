@@ -11,7 +11,8 @@ $(document).ready(function() {
       hand9: { name: "Straight Flush", chip: 100, multi: 8 },
       hand10: { name: "Royal Flush", chip: 100, multi: 8 },
       hand11: { name: "Five of a Kind", chip: 120, multi: 12 },
-      hand12: { name: "Flush House", chip: 140, multi: 14 }
+      hand12: { name: "Flush House", chip: 140, multi: 14 },
+      hand13: { name: "Fuller House", chip: 155, multi: 15 }
   };
 
   var cardchips = {
@@ -86,6 +87,17 @@ $(document).ready(function() {
       log.push({ name, chip, multi, type });
   }
 
+  function changeBackgroundColor() {
+    // Array of colors to choose from
+    var colors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FFFF33'];
+
+    // Select a random color from the array
+    var randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+    // Change the background color of the body
+    $('body').css('background-color', randomColor);
+}
+
   function undoLogEntry(entryText, type) {
       console.log("Undoing log entry:", entryText); // Debug log
 
@@ -102,6 +114,7 @@ $(document).ready(function() {
           $('.hand-options').removeClass('hide').addClass('show'); // Show hand options
           $('.card-options, .reset-hand').removeClass('show').addClass('hide'); // Hide card options
           $('#hand-type').html('Select hand');
+          $('body').toggleClass('bg-hand');
           $('#log').empty(); // Clear the log
           totalChip = 0; // Reset totalChip
           totalMulti = 0; // Reset totalMulti
@@ -159,12 +172,17 @@ $(document).ready(function() {
       $('#extra-multi-value').val(''); // Clear multi input field
   });
 
+  //enter submit
+
+
+
   // Hand value click handler
   $('.hand').on('click', function() {
       var buttonId = $(this).attr('id');
       var combination = combinations[buttonId];
       $('.hand-options').removeClass('show').addClass('hide');
       $('.card-options, .reset-hand').removeClass('hide').addClass('show');
+      $('body').toggleClass('bg-hand');
       $('#card-options-step').prop('disabled', false);
 
       if (combination) {

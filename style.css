@@ -10,7 +10,10 @@
   --text-h: var(--white-1);
   --text-m: var(--white-2);
   --text-l: var(--white-3);
-  
+  --bg-1: #0f8189;
+  --bg-2: rgba(74, 10, 75, 1);
+
+
   --white-1:#f5f5f5;
   --white-2:#f2f4f8;
   --white-3:#cdd1d5;
@@ -26,7 +29,9 @@
   --yellow-1: #F79B15;
   --yellow-2: #DB8D1D;
   --yellow-3: #B47621;
-  --purple:#9f608b;
+
+  --navy: #324461;
+  --purple-1:#9f608b;
   --black:#111111;
   --container-background:#374244;
     /* Card Backgrounds */
@@ -74,7 +79,7 @@ main {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
@@ -120,6 +125,13 @@ h1 {
   100% { background-color: var(--symbol-highlight); }
 }
 /* my css */
+body {
+  background-color: var(--bg-1);
+}
+body.bg-hand {
+  background-color: var(--bg-2);
+}
+
 .hand-options, .card-options {
   transition: transform 0.5s, opacity 0.5s;
   transform: scaleY(1);
@@ -127,6 +139,7 @@ h1 {
 
 .hide {
   transform: scaleY(0);
+  position: absolute;
   opacity: 0;
   height: 0;
   overflow: hidden;
@@ -137,10 +150,12 @@ h1 {
   transform: scaleY(1);
   opacity: 1;
   height: auto;
+  position: relative;
 }
 
 .subtitle {
   margin-top:1rem;
+  font-size: 1rem;
   margin-bottom:0.5rem;
 }
 
@@ -358,7 +373,7 @@ color: var(--text-l);
 
 input[type="number"] {
   width:100%;
-  padding: 1.2rem 1rem ;
+  padding: 1.2rem 0.4rem;
   margin: 1rem 0 1rem 1rem ;
   border: 2px solid var(--white-3);
   background-color: var(--container-background);
@@ -371,9 +386,6 @@ input[type="number"]::placeholder {
   color:var(--glow-effect)
 }
 
-body {
-  background-color: rgba(74, 10, 75, 1);
-}
 
 body::before {
   content: " ";

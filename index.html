@@ -11,8 +11,8 @@
 <body>
   <main>
     <div class="container">
-      <div class="grid">
-        <div class="col-span-3 sidepanel">
+      <div class="flex">
+        <div class="sidepanel sidebar">
           <div class=" card column">
             <div id="hand-type">Select hand</div>
             <div class="points">
@@ -31,7 +31,7 @@
         </div>
 
   
-        <div class="col-span-9">
+        <div class=" main-content">
           <div class="card" style="display:none;">
             <button id="hand-option-step" class="step">
               1. Hand
@@ -58,6 +58,7 @@
                 <h4 class="subtitle">Spicy hands</h4>
                 <button id="hand11" class="selection hand">Five of a Kind</button>
                 <button id="hand12" class="selection hand">Flush House</button>
+                <button id="hand13" class="selection hand">Fuller House</button>
               </div>
             </div>
 
@@ -99,16 +100,22 @@
               </div>
             </div>
 
-            
-              <button id="reset-hand" class="reset-hand hide">Start again</button>
+            <div class="card reset-hand hide column">
+              <button id="reset-hand" class=" ">Start again</button>
+            </div>
+              
           
-          <div class="card column">
+          <div class="column subtitle">
            left to do:
            <br>
-           mobile/small screen responsivenes
+            <br>
+          clean up styles and make stuff fancier
           <br>
-         clean up styles and make stuff fancier
-           
+          <br>
+          Add quick entry support for extra chips/multi
+          <br>
+          <br>
+          add option to save values
           </div>
 
 

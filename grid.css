@@ -1,3 +1,35 @@
+
+.sidebar {
+  width:100%
+}
+
+.main-content {
+  flex-grow: 1;
+  margin-left: 0rem;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .flex {
+    flex-direction: row;
+  }
+  .sidebar {
+    width:300px;
+  }
+
+  .main-content {
+    flex-grow: 1;
+    margin-left: 1rem;
+  }
+}
+
+
+
+/* grid */
 .grid {
   display: grid;
   gap: 1rem; /* 1rem gap between columns */
