@@ -36,9 +36,12 @@ $(document).ready(function() {
   var log = [];
 
   function updateDisplay() {
-      $('.points-card.chip').text(totalChip);
-      $('.points-card.multi').text(totalMulti);
-      $('.points-card.total').text(totalChip * totalMulti);
+      $('.points-card.chip').text(totalChip).addClass('wiggle');
+      $('.points-card.multi').text(totalMulti).addClass('wiggle');
+      $('.points-card.total').text(totalChip * totalMulti).addClass('wiggle');
+      setTimeout(function() {
+          $('.points-card.chip, .points-card.multi, .points-card.total').removeClass('wiggle');
+      }, 300); // Match the duration of the wiggle animation
   }
 
   function updateLog(name, chip, multi, type) {
@@ -88,60 +91,51 @@ $(document).ready(function() {
   }
 
   function changeBackgroundColor() {
-    // Array of colors to choose from
-    var colors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FFFF33'];
-
-    // Select a random color from the array
-    var randomColor = colors[Math.floor(Math.random() * colors.length)];
-
-    // Change the background color of the body
-    $('body').css('background-color', randomColor);
-}
+      var colors = ['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FFFF33'];
+      var randomColor = colors[Math.floor(Math.random() * colors.length)];
+      $('body').css('background-color', randomColor);
+  }
 
   function undoLogEntry(entryText, type) {
-      console.log("Undoing log entry:", entryText); // Debug log
+      console.log("Undoing log entry:", entryText);
 
-      // Regex to extract chip and multi values
-      var chipMatch = entryText.match(/\+?\d+/g); // Match any positive or negative integer
-      var multiMatch = entryText.match(/(?:\+)?(\d+)/i); // Match '+<number>'
+      var chipMatch = entryText.match(/\+?\d+/g);
+      var multiMatch = entryText.match(/(?:\+)?(\d+)/i);
 
       console.log("chipMatch:", chipMatch);
       console.log("multiMatch:", multiMatch);
 
       if (type === 'hand-log') {
-          // Actions specific to hand-log undo
-          $('.hand').removeClass('selected'); // Remove .selected from all hands
-          $('.hand-options').removeClass('hide').addClass('show'); // Show hand options
-          $('.card-options, .reset-hand').removeClass('show').addClass('hide'); // Hide card options
+          $('.hand').removeClass('selected');
+          $('.hand-options').removeClass('hide').addClass('show');
+          $('.card-options, .reset-hand').removeClass('show').addClass('hide');
           $('#hand-type').html('Select hand');
           $('body').toggleClass('bg-hand');
-          $('#log').empty(); // Clear the log
-          totalChip = 0; // Reset totalChip
-          totalMulti = 0; // Reset totalMulti
+          $('#log').empty();
+          totalChip = 0;
+          totalMulti = 0;
 
-          $('#extra-chip-value').val(''); // Clear chip input field
-          $('#extra-multi-value').val(''); // Clear multi input field
+          $('#extra-chip-value').val('');
+          $('#extra-multi-value').val('');
 
-          // Reset display values
           updateDisplay();
       } else if (type === 'chip-log') {
           if (chipMatch) {
               var chipValue = parseInt(chipMatch[0]);
               totalChip -= chipValue;
-              console.log("Parsed chip value:", chipValue); // Debug log
+              console.log("Parsed chip value:", chipValue);
           }
       } else if (type === 'multi-log') {
           if (multiMatch) {
               var multiValue = parseInt(multiMatch[1]);
               totalMulti -= multiValue;
-              console.log("Parsed multi value:", multiValue); // Debug log
+              console.log("Parsed multi value:", multiValue);
           }
       }
 
       updateDisplay();
   }
 
-  // Add chip value
   $('#add-chip-value').on('click', function() {
       var chipValue = parseInt($('#extra-chip-value').val());
 
@@ -153,11 +147,9 @@ $(document).ready(function() {
       totalChip += chipValue;
       updateLog('Extra Chips', chipValue, '', 'chip-log');
       updateDisplay();
-      $('#extra-chip-value').val(''); // Clear chip input field
-
+      $('#extra-chip-value').val('');
   });
 
-  // Add multi value
   $('#add-multi-value').on('click', function() {
       var multiValue = parseInt($('#extra-multi-value').val());
 
@@ -169,14 +161,9 @@ $(document).ready(function() {
       totalMulti += multiValue;
       updateLog('Extra Multi', '', multiValue, 'multi-log');
       updateDisplay();
-      $('#extra-multi-value').val(''); // Clear multi input field
+      $('#extra-multi-value').val('');
   });
 
-  //enter submit
-
-
-
-  // Hand value click handler
   $('.hand').on('click', function() {
       var buttonId = $(this).attr('id');
       var combination = combinations[buttonId];
@@ -186,10 +173,7 @@ $(document).ready(function() {
       $('#card-options-step').prop('disabled', false);
 
       if (combination) {
-          // Remove .selected from all .hand elements
           $('.hand').removeClass('selected');
-
-          // Add .selected to the clicked .hand element
           $(this).addClass('selected');
 
           totalChip = combination.chip;
@@ -208,23 +192,19 @@ $(document).ready(function() {
       }
   });
 
-  // Card chip click handler
   $('.card-chip').on('click', function() {
       var buttonId = $(this).attr('id');
       var cardchip = cardchips[buttonId];
 
       if (cardchip) {
           totalChip += cardchip.chip;
-
           updateLog(cardchip.name, cardchip.chip, '', 'chip-log');
-
           updateDisplay();
       } else {
           console.log('Card chip not found:', buttonId);
       }
   });
 
-  // Reset Hand button click handler
   $('#reset-hand').on('click', function() {
       undoLogEntry('Resetting hand', 'hand-log');
   });
