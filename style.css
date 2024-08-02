@@ -73,7 +73,7 @@ main {
   color: white;
   padding: 1rem;
   width: min(70rem, 100%);
-  margin: 1rem auto;
+  margin: 1rem auto 200px;
   font-size: 1.5rem;
 }
 
@@ -424,9 +424,8 @@ body::before {
 
 /* Basic styles for body */
 body {
-
-  overflow: hidden;
   position: relative;
+
 }
 
 /* Scanlines effect */
@@ -438,6 +437,10 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: -1;
+  background: url('img/compatible_with.png') no-repeat bottom 16px right 16px;
+  background-size: 140px 140px;
+  
+  
 }
 
 .scanlines:after {
@@ -456,12 +459,15 @@ body {
   animation: scanlines 2s steps(60) infinite;
 }
 
-/* Page content styles */
-.content {
-  position: relative;
-  z-index: 1;
-  color: #fff;
-  text-align: center;
+
+.background-image {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 160px; /* Adjust the size as needed */
+  height: 160px; /* Adjust the size as needed */
+  background: url('img/compatible_with.png') no-repeat center center;
+  background-size: cover;
 }
 
 @keyframes scanlines {
