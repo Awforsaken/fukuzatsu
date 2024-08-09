@@ -44,6 +44,22 @@ $(document).ready(function() {
       }, 300); // Match the duration of the wiggle animation
   }
 
+  $('#open-modal').on('click', function() {
+    $('#about-modal').css('display', 'flex');
+});
+
+// Close the modal when the close button is clicked
+$('#close-modal').on('click', function() {
+    $('#about-modal').css('display', 'none');
+});
+
+// Close the modal when clicking outside the modal content
+$(window).on('click', function(event) {
+    if ($(event.target).is('#about-modal')) {
+        $('#about-modal').css('display', 'none');
+    }
+});
+
   function updateLog(name, chip, multi, type) {
       var logEntry = $('<div class="log-entry"></div>');
 

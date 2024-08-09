@@ -134,7 +134,7 @@ body.bg-hand {
 }
 
 .hand-options, .card-options {
-  transition: transform 0.5s, opacity 0.5s;
+  transition: transform 0.2s, opacity 0.2s;
   transform: scaleY(1);
 }
 
@@ -425,7 +425,6 @@ body::before {
 /* Basic styles for body */
 body {
   position: relative;
-
 }
 
 /* Scanlines effect */
@@ -477,4 +476,87 @@ body {
   100% {
       background-position: 0 100%;
   }
+}
+
+
+
+a {
+  color:var(--symbol-color);
+  text-decoration: none;
+}
+
+/* modal */
+
+/* Basic button styling */
+#open-modal {
+  background-color: var(--green-3);
+}
+
+#open-modal:hover {
+  background-color: var(--green-2);
+}
+
+/* Modal default state (hidden) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  
+}
+
+/* Modal content box */
+.modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 500px;
+  position: relative;
+  animation: fadeIn 0.3s;
+
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px solid var(--text-m);
+  border-radius: 1rem;
+  background-color: var(--container-background);
+  margin-bottom: 1rem;
+}
+
+/* Close button styling */
+.close-button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 32px;
+  min-width:32px;
+  width: 32px;
+  height:32px;
+  cursor: pointer;
+  background-color: var(--navy);
+  color: var(--white-1);
+}
+
+.close-button:hover {
+
+  background-color: var(--card-shadow);
+}
+
+.close-button > * {
+  margin-top: -13px;
+  margin-left: -1px;
+}
+
+
+/* Fade-in animation for modal */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
 }
