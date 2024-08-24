@@ -241,6 +241,8 @@ button {
   color: var(--text-h);
   font-size: 1.2rem;
   cursor: pointer; 
+  touch-action: manipulation;
+
 }
 .selection {
   background-color: var(--yellow-3); 
