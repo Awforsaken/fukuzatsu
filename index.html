@@ -146,6 +146,7 @@
 
   </main>
   <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   <script>
     kofiWidgetOverlay.draw('awfor', {
       'type': 'floating-chat',
@@ -154,10 +155,31 @@
       'floating-chat.donateButton.text-color': '#fff'
     });
   </script>
+  <script>
+    const handButtons = document.querySelectorAll(".selection.hand");
+    handButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const handName = button.textContent.trim();
+        if (window.sa_event) {
+          sa_event("hand_selected", {
+            hand: handName
+          });
+        }
+      });
+    });
   
+    const resetButton = document.getElementById("reset-hand");
+if (resetButton) {
+  resetButton.addEventListener("click", () => {
+    if (window.sa_event) {
+      sa_event("start_again");
+    }
+  });
+}
+  </script>
   <script src="addjokers.js" defer></script>
   <script src="js.js"></script>
-  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+
   <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
 </body>
 </html>
