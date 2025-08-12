@@ -490,11 +490,11 @@ a {
 /* modal */
 
 /* Basic button styling */
-#open-modal {
+#open-modal, button {
   background-color: var(--green-3);
 }
 
-#open-modal:hover {
+#open-modal:hover,  button:hover {
   background-color: var(--green-2);
 }
 
