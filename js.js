@@ -227,3 +227,49 @@ $(window).on('click', function(event) {
 
   updateDisplay();
 });
+
+(async () => {
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+
+    const anchor = document.getElementById("geo-notice-anchor");
+    if (!anchor) return;
+
+    let bannerClass = null;
+    let message = null;
+    let bodyClass = null;
+
+    if (data.country_code === "IL") {
+      // :contentReference[oaicite:0]{index=0}
+      bannerClass = "geo-banner geo-banner--israel";
+      bodyClass = "geo-israel";
+      message = `
+        🍉 From the river to the sea... 🍉
+      `;
+    }
+
+    if (data.country_code === "RU") {
+      // :contentReference[oaicite:1]{index=1}
+      bannerClass = "geo-banner geo-banner--russia";
+      bodyClass = "geo-russia";
+      message = `
+        Slava Ukraini
+      `;
+    }
+
+    if (bannerClass && message) {
+      // Add class to <body>
+      document.body.classList.add(bodyClass);
+
+      // Create banner
+      const banner = document.createElement("div");
+      banner.className = bannerClass;
+      banner.innerHTML = message;
+
+      anchor.appendChild(banner);
+    }
+  } catch {
+    // Fail silently
+  }
+})();
