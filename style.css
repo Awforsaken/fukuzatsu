@@ -73,7 +73,7 @@ main {
   color: white;
   padding: 1rem;
   width: min(70rem, 100%);
-  margin: 1rem auto 200px;
+  margin:0;
   font-size: 1.5rem;
 }
 
@@ -92,7 +92,7 @@ h1 {
 }
 
 .sidepanel {
-  min-width: 260px;
+  min-width: 360px;
 }
 
 .joker img {
@@ -105,12 +105,23 @@ h1 {
   to {object-position: -2720px 0px}
 }
 
-#reset-hand {
-  background-color: var(--table-background);
-  color:var(--glow-effect);
+.button-container {
+width:100%;
 }
 
-#reset-hand:hover {
+
+
+.reset-hand,  
+#save-hand  {
+  background-color: var(--table-background);
+  color:var(--glow-effect);
+  max-width: 200px;
+  width:48%;
+}
+
+ 
+#save-hand:hover , 
+.reset-hand:hover {
  /* animation: flashingColors 2s infinite;
  */ 
   background-color:var(--text-secondary);
@@ -171,8 +182,8 @@ body.bg-hand {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
-  border: 2px solid var(--text-m);
+  padding: 0.5rem;
+  border: 2px solid var(--symbol-color);
   border-radius: 1rem;
   background-color: var(--container-background);
   margin-bottom: 1rem;
@@ -326,8 +337,8 @@ color: var(--text-l);
 .name-log {
   color:var(--text-m);
   margin-right:1rem;
-
 }
+
 .log-entry:hover {
   background-color: var(--green-2);
   position: relative;
@@ -335,10 +346,57 @@ color: var(--text-l);
   
 }
 
+.small-text {
+  font-size: 1rem;
+  color:(var(--text-l));
+  text-align: center;
+}
+details {
+  background-color: var(--black);
+  width:100%;
+  border-radius:4px;
+  padding: 0.2rem;
+
+  border-radius: 8px;
+
+  summary {
+    padding-bottom: 0.2rem;
+      cursor:pointer;
+  }
+}
+.player-points{
+  width:100%;
+  
+  .player-score, 
+  .player-diff {
+  text-align: right;
+  }
+
+  .player-entry.winner {
+    background:var(--blue-2);
+    color:(var(--text-h));
+    opacity:1;
+  }
+
+  .player-entry{
+    opacity:0.7;
+     background:var(--red-3);
+    border-radius:4px;
+    padding: 0.2rem;
+    margin-bottom: 0.2rem;
+    color:(var(--text-l));
+  }
+}
+
+
 .card.log {
   align-items: flex-start;
 }
+.extra-wrapper {
+  display: flex;
+  gap:1rem;
 
+}
 .extra-chip-container .option-chip {
   background-color: var(--blue-2);
   padding:1.2rem 0.5rem;
@@ -346,14 +404,20 @@ color: var(--text-l);
 .option-chip:hover {
   background-color: var(--blue-1);
 }
+.extra-container {
+  padding: 0.2rem;
+  margin-bottom: 0;
+  border-radius: 0.5rem;
+  padding-right: 0.5rem;
+  display: inline-flex;
+  flex-grow: 1;
+  gap:0.2rem;
+}
 
 .extra-chip-container.card {
   background-color: var(--blue-3);
   border: 2px solid var(--blue-2);
-  padding: 0.2rem;
-  margin-bottom: 0;
-  border-radius: 0.5rem;
-  padding-right: 1rem;
+
 }
 
 .extra-multi-container .option-multi {
@@ -367,17 +431,13 @@ color: var(--text-l);
 .extra-multi-container {
   background-color: var(--red-3);
   border: 2px solid var(--red-2);
-  padding: 0.2rem;
-  margin-bottom: 0;
-  border-radius: 0.5rem;
-  padding-right: 1rem;
 }
 
 
 input[type="number"] {
   width:100%;
   padding: 1.2rem 0.4rem;
-  margin: 1rem 0 1rem 1rem ;
+  margin: 0.5rem 0 0.5rem 0.5rem ;
   border: 2px solid var(--white-3);
   background-color: var(--container-background);
   border-radius: 4px;

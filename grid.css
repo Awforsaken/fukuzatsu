@@ -25,6 +25,10 @@
     flex-grow: 1;
     margin-left: 1rem;
   }
+
+  main {
+    margin: 1rem auto 200px;
+  }
 }
 
 
@@ -33,7 +37,13 @@
 .grid {
   display: grid;
   gap: 1rem; /* 1rem gap between columns */
-  align-items: flex-start;;
+  align-items: flex-start;
+}
+
+.grid-3{
+  display: grid;
+  grid-template-columns: max-content 1fr 1fr;
+  gap: 1rem; /* adjust or remove to taste */
 }
 
 /* Mobile version with a single column */

@@ -31,9 +31,73 @@ $(document).ready(function() {
       cardchip13: { name: "2", chip: 2 }
   };
 
+  // Shared empty-state markup for breakdown and round scores
+  var EMPTY_STATE_HTML = '<div class="small-text">No played hands</div>';
+
   var totalChip = 0;
   var totalMulti = 0;
   var log = [];
+
+  // --- Multi-player tracking ---
+  var MAX_PLAYERS = 10;
+  var players = [];       // saved final scores, one per player, in save order
+  var handActive = false; // true while the current player has a hand selected
+
+  function renderPlayers() {
+      var container = $('.player-points');
+      container.empty();
+
+      // Saved players, plus the current player's live score while a hand is in progress
+      var entries = players.map(function(points) {
+          return { points: points, live: false };
+      });
+
+      if (handActive && players.length < MAX_PLAYERS) {
+          entries.push({ points: totalChip * totalMulti, live: true });
+      }
+
+      if (entries.length === 0) {
+          container.html(EMPTY_STATE_HTML);
+          return;
+      }
+
+      var maxPoints = Math.max.apply(null, entries.map(function(e) { return e.points; }));
+
+      entries.forEach(function(e, i) {
+          var playerLabel = 'P' + (i + 1);
+          var isWinner = e.points === maxPoints;
+          var diff = maxPoints - e.points;
+
+          var entry = $('<div class="player-entry grid-3 small-text"></div>');
+          entry.attr('data-player-index', i);
+
+          if (e.live) {
+              entry.addClass('current'); // the player being calculated right now
+          }
+
+          if (isWinner) {
+              entry.addClass('winner');
+              entry.html(
+                  '<span class="player-label">' + playerLabel + '</span>' +
+                  '<span class="player-diff">winner</span>' +
+                  '<span class="player-score">' + e.points + ' pts</span>'
+              );
+          } else {
+              entry.html(
+                  '<span class="player-label">' + playerLabel + '</span>' +
+                  '<span class="player-diff">-' + diff + '</span>' +
+                  '<span class="player-score">' + e.points + ' pts</span>'
+              );
+          }
+
+          container.append(entry);
+      });
+  }
+
+  function resetHandForNextPlayer() {
+      // Re-uses the same reset behaviour as "Start again", without touching players[]
+      undoLogEntry('Resetting hand', 'hand-log');
+  }
 
   function updateDisplay() {
       $('.points-card.chip').text(totalChip).addClass('wiggle');
@@ -42,6 +106,14 @@ $(document).ready(function() {
       setTimeout(function() {
           $('.points-card.chip, .points-card.multi, .points-card.total').removeClass('wiggle');
       }, 300); // Match the duration of the wiggle animation
+
+      // Every point change (hand, card, extras, undo) also refreshes the players list
+      renderPlayers();
+
+      // Empty breakdown placeholder
+      if ($('#log').children().length === 0) {
+          $('#log').html(EMPTY_STATE_HTML);
+      }
   }
 
   $('#open-modal').on('click', function() {
@@ -100,6 +172,7 @@ $(window).on('click', function(event) {
           var entryType = $(this).data('type'); // Get the entry type
           undoLogEntry(entryText, entryType);
           $(this).remove();
+          updateDisplay(); // refresh so the empty placeholder can appear if the log is now empty
       });
 
       $('#log').append(logEntry);
@@ -122,9 +195,11 @@ $(window).on('click', function(event) {
       console.log("multiMatch:", multiMatch);
 
       if (type === 'hand-log') {
+          handActive = false; // no live entry once the hand is cleared
+
           $('.hand').removeClass('selected');
-          $('.hand-options').removeClass('hide').addClass('show');
-          $('.card-options, .reset-hand').removeClass('show').addClass('hide');
+          $('.hand-options, hand-actions').removeClass('hide').addClass('show');
+          $('.card-options, .hand-actions').removeClass('show').addClass('hide');
           $('#hand-type').html('Select hand');
           $('body').toggleClass('bg-hand');
           $('#log').empty();
@@ -184,7 +259,7 @@ $(window).on('click', function(event) {
       var buttonId = $(this).attr('id');
       var combination = combinations[buttonId];
       $('.hand-options').removeClass('show').addClass('hide');
-      $('.card-options, .reset-hand').removeClass('hide').addClass('show');
+      $('.card-options, .hand-actions').removeClass('hide').addClass('show');
       $('body').toggleClass('bg-hand');
       $('#card-options-step').prop('disabled', false);
 
@@ -194,6 +269,7 @@ $(window).on('click', function(event) {
 
           totalChip = combination.chip;
           totalMulti = combination.multi;
+          handActive = true; // start showing this player's live score
 
           $('#log').empty();
           log = [];
@@ -221,8 +297,25 @@ $(window).on('click', function(event) {
       }
   });
 
-  $('#reset-hand').on('click', function() {
-      undoLogEntry('Resetting hand', 'hand-log');
+  // "Next player": bank the current total as this player's score. The reset
+  // below clears handActive, so the live entry becomes a saved entry.
+  $('#save-hand').on('click', function() {
+      if (players.length >= MAX_PLAYERS) {
+          alert('Maximum of ' + MAX_PLAYERS + ' players reached.');
+          return;
+      }
+
+      var finalScore = totalChip * totalMulti;
+      players.push(finalScore);
+
+      resetHandForNextPlayer(); // also re-renders via updateDisplay()
+  });
+
+  // "Start again": full reset, including clearing all saved players.
+  // Only the buttons carry the .reset-hand class (the container is .hand-actions).
+  $('.reset-hand').on('click', function() {
+      players = [];
+      undoLogEntry('Resetting hand', 'hand-log'); // also re-renders via updateDisplay()
   });
 
   updateDisplay();

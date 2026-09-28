@@ -16,22 +16,26 @@
     <div class="container">
       <div class="flex">
         <div class="sidepanel sidebar">
-          <div class=" card column">
-            <div id="hand-type">Select hand</div>
-            <div class="points">
-              <div class="points-card chip">0</div>
-              <div class="points-card">X</div>
-              <div class="points-card multi">0</div> 
-            </div>
-            <div class="points-card total">0</div>
-          </div>
+  <div class="card column">
+    <div id="hand-type">Select hand</div>
+    <div class="points">
+      <div class="points-card chip">0</div>
+      <div class="points-card">X</div>
+      <div class="points-card multi">0</div>
+    </div>
+    <div class="points-card total">0</div>
+    <details open>
+      <summary>Breakdown</summary>
+      <div class="log-container" id="log">Start by picking hand & cards</div>
+    </details>
 
-          <div class="card column">
-            <div>Breakdown</div>
-            <div class="log-container" id="log"></div>
-          </div>
-
-        </div>
+    <details>
+      <summary>Round scores</summary>
+      <div class="player-points"></div>
+      <button class="reset-hand">New round</button>
+    </details>
+  </div>
+</div>
 
   
         <div class=" main-content">
@@ -88,23 +92,28 @@
             </div>
             <div class="card column card-options hide">
               <h1>Extra Buffs and Multipliers</h1>
-              <div class="grid">
+              <div class="extra-wrapper">
 
-                <div class="col-span-6 extra-chip-container card">
-                  <input type="number" id="extra-chip-value" placeholder="Extra chips" />
+                <div class="extra-container extra-chip-container card">
+                  <input type="number" id="extra-chip-value" placeholder="Chips" />
                   <button id="add-chip-value" class="option-chip">Add</button>
                 </div>
               
                 <!-- Input for multi values -->
-                <div class="col-span-6 extra-multi-container card">
-                  <input type="number" id="extra-multi-value" placeholder="Extra multi" />
+                <div class="extra-container extra-multi-container card">
+                  <input type="number" id="extra-multi-value" placeholder="Multi" />
                   <button id="add-multi-value"  class="option-multi">Add</button>
                 </div>
               </div>
             </div>
 
-            <div class="card reset-hand hide column">
-              <button id="reset-hand" class=" ">Start again</button>
+            <div class="card hand-actions hide column">
+              <div class="button-container">
+                <!-- preserve the existing value in a new div with Player 1/2/X as a title  and total points value-->
+                <button id="save-hand" class=" ">Next player</button>
+                <!-- this clears everything and starts next round -->
+                <button class="reset-hand">New round</button>
+              </div>
             </div>
               
           
@@ -128,20 +137,11 @@
           <br>
           <br>
           <h1>About me</h1>
-          <p class="subtitle">Heyo, I am Dan but sometimes go online by Awfor. I am user experience designer by day and TTPRPG fan, designer and developer of random things during most of the other times.</p>
+          <p class="subtitle">Heyo, I am <a href="https://danielius.vercel.app" target="_blank" style="">Dan</a> but sometimes go online by Awfor. I am user experience designer by day and TTPRPG fan, designer and developer of random things during most of the other times. You can find more of my stuff <a href="https://danielius.vercel.app" target="_blank" style="">here</a>. </p>
           <br>
           <br>
           <h1>Left to do</h1>
           <div class="column subtitle">
-           clean up styles and make stuff fancier
-           <br>
-           <br>
-           Add quick entry support for extra chips/multi
-           <br>
-           <br>
-           add option to save values
-           <br>
-           <br>
            clean up footer/add about section
            </div>
       </div>
@@ -170,15 +170,14 @@
         }
       });
     });
-  
-    const resetButton = document.getElementById("reset-hand");
-if (resetButton) {
-  resetButton.addEventListener("click", () => {
-    if (window.sa_event) {
-      sa_event("start_again");
-    }
-  });
-}
+
+    document.querySelectorAll(".reset-hand").forEach(button => {
+      button.addEventListener("click", () => {
+        if (window.sa_event) {
+          sa_event("start_again");
+        }
+      });
+    });
   </script>
   <script src="js.js"></script>
 
